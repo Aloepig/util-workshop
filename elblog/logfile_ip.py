@@ -32,21 +32,35 @@ file_list = os.listdir(folder_path)
 
 ip_set = {1}
 
-Array_one = []
+file_name = "/Users/leebyungjik/Documents/2023년 4월/504오류/api-elb-tapjoy-2023-04-18-09시12시까지.txt"
 
-for log_file in file_list:
-    print(log_file)
-    if ".DS_Store" != log_file:
-        file_path = os.path.join(folder_path, log_file)
-        # 파일을 읽어와서 출력합니다.
-        try:
-            with open(file_path, "r") as file:
-                lines = file.readlines()
-                for log in lines:
-                    if len(log) > 1:
-                        # print(extract_ip_address(log))
-                        ip_set.add(extract_ip_address(log)[0])
-        except:
-            print("error")
-        finally:
-            print(ip_set)
+# 파일을 읽어와서 출력합니다.
+try:
+    with open(file_name, "r") as file:
+        lines = file.readlines()
+        for log in lines:
+            if len(log) > 1:
+                print(extract_ip_address(log))
+                ip_set.add(extract_ip_address(log)[0])
+except:
+    print("error")
+finally:
+    print(ip_set)
+
+#
+# for log_file in file_list:
+#     print(log_file)
+#     if ".DS_Store" != log_file:
+#         file_path = os.path.join(folder_path, log_file)
+#         # 파일을 읽어와서 출력합니다.
+#         try:
+#             with open(file_path, "r") as file:
+#                 lines = file.readlines()
+#                 for log in lines:
+#                     if len(log) > 1:
+#                         # print(extract_ip_address(log))
+#                         ip_set.add(extract_ip_address(log)[0])
+#         except:
+#             print("error")
+#         finally:
+#             print(ip_set)
