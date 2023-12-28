@@ -1,0 +1,45 @@
+config:
+# This is a test server run by team Artillery
+# It's designed to be highly scalable
+#  target: http://192.168.0.69:8080
+#  target: http://192.168.0.71:8080
+#  target: https://api.fanca.io
+#  target: https://dev-api.fanca.io
+  target: https://stg-api.fanca.io
+  phases:
+#    - duration: 2
+#      arrivalRate: 1
+#      rampTo: 5
+#      name: Warm up phase
+#    - duration: 60
+#      arrivalRate: 5
+#      rampTo: 10
+#      name: Ramp up load
+    - duration: 60  # 지속시간
+      arrivalRate: 10 # 초당 생성 유저 10, 20, 30 ... 240.. 230 ... 30
+      rampTo: 30 # 종료시 유저수
+#      maxVusers: 300 # 피크 유저수
+      name: Spike phase
+# Load & configure a couple of useful plugins
+# https://docs.art/reference/extensions
+  plugins:
+    ensure: { }
+    apdex: { }
+    metrics-by-endpoint: { }
+  apdex:
+    threshold: 100
+  ensure:
+    thresholds:
+      - http.response_time.p99: 100
+      - http.response_time.p95: 75
+scenarios:
+  - flow:
+      - loop:
+          - get:
+              url: "/public/pop"
+              headers:
+                build-mode: "contentsmadang-test"
+#              json:
+#                typeLang: "ko"
+#                typeDevice: 1
+        count: 40 # 반복횟수

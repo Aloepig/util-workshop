@@ -1,0 +1,45 @@
+config:
+# This is a test server run by team Artillery
+# It's designed to be highly scalable
+#  target: http://192.168.0.69:8080
+#  target: https://api.fanca.io
+#  target: https://stg-api.fanca.io
+  target: https://dev-api.fanca.io
+  phases:
+#    - duration: 5
+#      arrivalRate: 1
+#      name: "매초 1씩 증가 1,2,3,4 종료 : 총 10개 생성"
+
+#    - duration: 5
+#      arrivalRate: 1
+#      rampTo: 2
+#      name: "매초 1씩 증가. 1,2,3,2 종료 : 총 8개 생성"
+
+#    - duration: 5
+#      arrivalRate: 1
+#      rampTo: 10
+#      name: "매초 1씩 증가. 1,4,13,10 종료 : 총 28개 생성"
+
+    - duration: 5
+      arrivalCount: 10 # 총 요청
+      name: "매초 2~3씩 증가. 2,3,3,3 종료 : 총 10개 생성"
+  # Load & configure a couple of useful plugins
+# https://docs.art/reference/extensions
+  plugins:
+    ensure: { }
+    apdex: { }
+    metrics-by-endpoint: { }
+  apdex:
+    threshold: 100
+  ensure:
+    thresholds:
+      - http.response_time.p99: 100
+      - http.response_time.p95: 75
+scenarios:
+  - flow:
+      - loop:
+          - get:
+              url: "/health"
+              headers:
+                build-mode: "contentsmadang-test"
+        count: 1
