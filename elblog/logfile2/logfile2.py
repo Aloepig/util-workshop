@@ -16,7 +16,7 @@ def extract_https(file_path, new_file_path):
             f.write(https + "," + str(https_list.count(https)) + '\n')
             total_count = total_count + https_list.count(https)
 
-        f.write(new_file_path + " list:" + str(len(https_list)) + " count:" + str(total_count) + '\n')
+        f.write("verification > list:" + str(len(https_list)) + " count:" + str(total_count) + '\n')
 
     print(new_file_path + ' 파일에 https://가 저장되었습니다.')
 
